@@ -14,10 +14,8 @@
 //   },
 // });
 
-
 // export type { RootState };
 // export default store;
-
 
 // import { configureStore } from '@reduxjs/toolkit';
 // import userReducer from './authSlice';
@@ -30,12 +28,13 @@
 
 // export default store;
 
-
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import userReducer from './authSlice';
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import userReducer from "./authSlice";
+import productReducer from "./productSlice";
 
 const rootReducer = combineReducers({
   user: userReducer,
+  product: productReducer,
 });
 
 const store = configureStore({
