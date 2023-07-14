@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { editProduct } from "../redux/productSlice";
 import { loaderTimer } from "../config/config";
-import { ProgressSpinner as Loader } from "primereact/progressspinner";
+import Loader from "./Loader/Loader";
 import { InputText } from "primereact/inputtext";
 
 interface Product {
@@ -25,18 +26,17 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
   showToast,
 }) => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false); // Add loading state
-
+  const [loading, setLoading] = useState<boolean>(false); // Add loading state
   const [code, setCode] = useState(selectedProduct ? selectedProduct.code : "");
   const [name, setName] = useState(selectedProduct ? selectedProduct.name : "");
   const [description, setDescription] = useState(
     selectedProduct ? selectedProduct.description : ""
   );
-
   const [initialCode, setInitialCode] = useState(code); // Track initial code value
   const [initialName, setInitialName] = useState(name); // Track initial name value
   const [initialDescription, setInitialDescription] = useState(description); // Track initial description value
 
+  
   const isFormValid = () => {
     return (
       code.trim() !== "" && name.trim() !== "" && description.trim() !== ""
@@ -157,11 +157,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
             </div>
           </form>
 
-          {loading && (
-            <div className="loader-container">
-              <Loader />
-            </div>
-          )}
+          {loading && <Loader />}
         </div>
       </Dialog>
     </>

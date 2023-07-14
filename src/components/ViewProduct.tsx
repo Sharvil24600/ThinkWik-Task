@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "./Navbar/Navbar";
 import { logout } from "../redux/authSlice";
 import { loaderTimer } from "../config/config";
-import { ProgressSpinner as Loader } from "primereact/progressspinner";
+import Loader from "./Loader/Loader";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
@@ -17,13 +17,14 @@ const ViewProduct: React.FC = () => {
   const { productId } = useParams<{ productId: string }>();
   const products = useSelector((state: RootState) => state.product.products);
   const product = products.find((p) => p.id === parseInt(productId || ""));
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false); // Add loading state
 
   const useremail = useSelector((state: RootState) => {
     const user = state.user.user;
     return user ? user.email : "";
   });
 
+  //logout function
   const handleLogout = () => {
     setLoading(true);
     setTimeout(() => {
@@ -33,6 +34,7 @@ const ViewProduct: React.FC = () => {
     }, loaderTimer);
   };
 
+  // for going back to home page
   const handleBack = () => {
     navigate("/home");
   };
@@ -110,11 +112,7 @@ const ViewProduct: React.FC = () => {
           </div>
         )}
       </div>
-      {loading && (
-        <div className="loader-container">
-          <Loader />
-        </div>
-      )}
+      {loading && <Loader />}
     </div>
   );
 };

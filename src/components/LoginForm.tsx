@@ -1,10 +1,10 @@
-import React, {useState } from "react";
-import { Link,  useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../redux/authSlice";
 import { useDispatch } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { loaderTimer } from "../config/config";
-import { ProgressSpinner as Loader } from "primereact/progressspinner";
+import Loader from "./Loader/Loader";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
@@ -26,7 +26,7 @@ const LoginForm: React.FC = () => {
   const [loginError, setLoginError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-   const handleLogin = (values: LoginFormValues) => {
+  const handleLogin = (values: LoginFormValues) => {
     const userDataString = localStorage.getItem("user");
 
     if (userDataString !== null) {
@@ -69,8 +69,6 @@ const LoginForm: React.FC = () => {
 
     return errors;
   };
-  console.log(isLoading);
-
   return (
     <>
       <div
@@ -156,11 +154,7 @@ const LoginForm: React.FC = () => {
             </span>
           </div>
         </Card>
-        {isLoading && (
-          <div className="loader-container">
-            <Loader />
-          </div>
-        )}
+        {isLoading && <Loader />}
       </div>
     </>
   );

@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Toast } from "primereact/toast";
-import { ProgressSpinner as Loader } from "primereact/progressspinner";
+import Loader from "./Loader/Loader";
 import { loaderTimer } from "../config/config";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
@@ -44,7 +44,7 @@ const SignupForm: React.FC = () => {
 
     // Check if the email already exists
     const existingUserString = localStorage.getItem("user");
-    console.log(existingUserString);
+
     if (existingUserString) {
       const existingUser = JSON.parse(existingUserString);
       if (existingUser.email === values.email) {
@@ -181,11 +181,7 @@ const SignupForm: React.FC = () => {
             </span>
           </div>
         </Card>
-        {isLoading && (
-          <div className="loader-container">
-            <Loader />
-          </div>
-        )}
+        {isLoading && <Loader />}
       </div>
     </>
   );

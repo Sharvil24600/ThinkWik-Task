@@ -10,9 +10,9 @@ import "primereact/resources/primereact.min.css";
 import TableComponent from "../TableComponent";
 import { Toast } from "primereact/toast";
 import { loaderTimer } from "../../config/config";
-import { ProgressSpinner as Loader } from "primereact/progressspinner";
+import Loader from "../Loader/Loader";
 import Navbar from "../Navbar/Navbar";
-import "./HomePage.css"
+import "./HomePage.css";
 import { Card } from "primereact/card";
 
 interface Product {
@@ -24,9 +24,11 @@ interface Product {
 const HomePage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const toast = useRef<Toast>(null);
-  const [loading, setLoading] = useState(false); // Add loading state
+  const [loading, setLoading] = useState<boolean>(false); // Add loading state
 
   const products = useSelector((state: RootState) => state.product.products); // Access the products from Redux store
+  
+  // displaying toast after user logs in
   useEffect(() => {
     if (localStorage.getItem("loginToastShown")) {
       toast.current?.show({
@@ -37,6 +39,7 @@ const HomePage: React.FC = () => {
       localStorage.removeItem("loginToastShown");
     }
   }, []);
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -45,6 +48,7 @@ const HomePage: React.FC = () => {
     setIsModalOpen(false);
   };
 
+  // getting user email from redux state
   const useremail = useSelector((state: RootState) => {
     const user = state.user.user;
     return user ? user.email : "";
@@ -53,6 +57,7 @@ const HomePage: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // logout function
   const handleLogout = () => {
     setLoading(true);
     setTimeout(() => {
@@ -82,10 +87,10 @@ const HomePage: React.FC = () => {
       life: 3000,
     });
   };
+
   return (
     <div className="home-page">
       <Toast ref={toast} />
-
       <Navbar username={useremail} onLogout={handleLogout} />
       <div className="add-button-container">
         <Button
@@ -95,7 +100,6 @@ const HomePage: React.FC = () => {
           onClick={openModal}
         />
       </div>
-
       <div className="table-container">
         <Card
           className="table-card p-shadow-2"
@@ -110,16 +114,10 @@ const HomePage: React.FC = () => {
           />
         </Card>
       </div>
-
       {isModalOpen && (
         <AddProductModal closeModal={closeModal} showToast={showToast} />
       )}
-
-      {loading && (
-        <div className="loader-container">
-          <Loader />
-        </div>
-      )}
+      {loading && <Loader />}
     </div>
   );
 };

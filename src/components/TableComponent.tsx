@@ -11,7 +11,7 @@ import { Toast } from "primereact/toast";
 import EditProductModal from "./EditProductModal";
 import { useNavigate } from "react-router-dom";
 import { loaderTimer } from "../config/config";
-import { ProgressSpinner as Loader } from "primereact/progressspinner";
+import Loader from "./Loader/Loader";
 
 interface Product {
   id: number;
@@ -40,6 +40,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
   const toast = useRef<Toast>(null);
   const navigate = useNavigate();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const openEditModal = () => {
     setIsEditModalOpen(true);
   };
@@ -106,7 +107,6 @@ const TableComponent: React.FC<TableComponentProps> = ({
   };
 
   const totalRecords = products.length;
-  console.log("total", totalRecords);
 
   return (
     <>
@@ -175,11 +175,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
           showToast={showToast}
         />
       )}
-      {loading && (
-        <div className="loader-container">
-          <Loader />
-        </div>
-      )}
+      {loading && <Loader />}
     </>
   );
 };

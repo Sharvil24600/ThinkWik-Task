@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "../redux/store";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import { ProgressSpinner as Loader } from "primereact/progressspinner";
+import Loader from "./Loader/Loader";
 import { loaderTimer } from "../config/config";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
@@ -38,7 +38,8 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const products = useSelector((state: RootState) => state.product.products); // Access the products from Redux store
-   const [loading, setLoading] = useState(false); // Add loading state
+  const [loading, setLoading] = useState<boolean>(false); // Add loading state
+
 
   const saveDataToLocalstorage = (productData: Product) => {
     const storedData = localStorage.getItem("products");
@@ -47,9 +48,10 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
     products.push(productData);
     localStorage.setItem("products", JSON.stringify(products));
   };
+
+  // submit function after adding data
   const handleSubmit = (values: Product) => {
     setLoading(true); // Start the loading state
-
     const newProduct: Product = {
       ...values,
       id: products.length > 0 ? products[products.length - 1].id + 1 : 1, // Increment the ID
@@ -99,7 +101,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                     as={InputText}
                     className="p-inputtext"
                   />
-         <label htmlFor="code">Product Code</label>
+                  <label htmlFor="code">Product Code</label>
                 </span>
                 <ErrorMessage
                   name="code"
@@ -168,17 +170,10 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
             </div>
           </Form>
         </Formik>
-        {loading && (
-          <div className="loader-container">
-            <Loader />
-          </div>
-        )}
+        {loading && <Loader />}
       </div>
     </Dialog>
   );
-
 };
 
 export default AddProductModal;
-
-
