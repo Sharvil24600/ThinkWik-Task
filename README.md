@@ -1,6 +1,6 @@
 # ThinkWik-Task
 
-# WebApp with Signup ,Login ,Logout and Crud operations using redux-toolkit and typescript
+## WebApp with Signup ,Login ,Logout and Crud operations using redux-toolkit and typescript
 
 This is app  is built with ReactJS, TypeScript, React Router v6 ,Formik ,primeReact Library,Redux-Toolkit.
 
