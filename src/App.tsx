@@ -1,8 +1,13 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
 import HomePage from "./components/HomePage/HomePage";
+import ViewProduct from "./components/ViewProduct";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 
@@ -14,6 +19,10 @@ const App: React.FC = () => {
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/" element={<LoginForm />} />
           <Route path="/home" element={<HomePage />} />
+          <Route
+            path="/product/view/:productId"
+            element={<ViewProduct />}
+          />
         </Routes>
       </Router>
     </div>

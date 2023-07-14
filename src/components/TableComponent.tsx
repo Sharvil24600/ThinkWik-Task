@@ -12,7 +12,6 @@ import EditProductModal from "./EditProductModal";
 import { useNavigate } from "react-router-dom";
 import { loaderTimer } from "../config/config";
 import { ProgressSpinner as Loader } from "primereact/progressspinner";
-import "./loader.css";
 
 interface Product {
   id: number;

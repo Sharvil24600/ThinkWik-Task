@@ -10,7 +10,6 @@ import { loaderTimer } from "../config/config";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Card } from "primereact/card";
-import "./loader.css";
 
 interface SignupFormValues {
   name: string;

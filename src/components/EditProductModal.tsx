@@ -5,7 +5,6 @@ import { Dialog } from "primereact/dialog";
 import { editProduct } from "../redux/productSlice";
 import { loaderTimer } from "../config/config";
 import { ProgressSpinner as Loader } from "primereact/progressspinner";
-import "./loader.css";
 import { InputText } from "primereact/inputtext";
 
 interface Product {

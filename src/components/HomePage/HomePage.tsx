@@ -12,9 +12,8 @@ import { Toast } from "primereact/toast";
 import { loaderTimer } from "../../config/config";
 import { ProgressSpinner as Loader } from "primereact/progressspinner";
 import Navbar from "../Navbar/Navbar";
-import "./Homepage.css";
+import "./HomePage.css"
 import { Card } from "primereact/card";
-import "./loader.css";
 
 interface Product {
   id: number;

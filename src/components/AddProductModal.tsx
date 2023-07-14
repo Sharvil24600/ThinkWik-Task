@@ -12,7 +12,6 @@ import "primereact/resources/primereact.min.css";
 import { InputText } from "primereact/inputtext";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import "./loader.css";
 
 interface Product {
   id: number;
