@@ -5,13 +5,14 @@ import "primeicons/primeicons.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.css";
 import { useDispatch } from "react-redux";
-import { deleteProduct } from "../redux/productSlice";
+import { deleteProduct } from "../../redux/productSlice";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
-import EditProductModal from "./EditProductModal";
+import EditProductModal from "../EditProductModal";
 import { useNavigate } from "react-router-dom";
-import { loaderTimer } from "../config/config";
-import Loader from "./Loader/Loader";
+import { loaderTimer, toastTimer } from "../../config/config";
+import Loader from "../Loader/Loader";
+import "./TableComponent.css";
 
 interface Product {
   id: number;
@@ -34,8 +35,8 @@ const TableComponent: React.FC<TableComponentProps> = ({
   onDelete,
 }) => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [loading, setLoading] = useState(false); // Add loading state
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false); // Add loading state
   const dispatch = useDispatch();
   const toast = useRef<Toast>(null);
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
       severity: "success",
       summary: "Product Saved",
       detail: "The product has been updated successfully",
-      life: 3000,
+      life: toastTimer,
     });
   };
 
@@ -87,7 +88,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
               severity: "success",
               summary: "Success",
               detail: "Record deleted successfully",
-              life: 3000,
+              life: toastTimer,
             });
           }, loaderTimer);
         } catch (error) {
@@ -100,7 +101,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
           severity: "warn",
           summary: "Rejected",
           detail: "Delete operation cancelled",
-          life: 3000,
+          life: toastTimer,
         });
       },
     });
@@ -113,7 +114,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
       <div>
         <Toast ref={toast} />
         <ConfirmDialog />
-        <div className="tableContainer">
+        <div className="table-component">
           <DataTable
             value={products}
             paginator

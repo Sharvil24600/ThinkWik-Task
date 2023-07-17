@@ -40,11 +40,9 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
   const products = useSelector((state: RootState) => state.product.products); // Access the products from Redux store
   const [loading, setLoading] = useState<boolean>(false); // Add loading state
 
-
   const saveDataToLocalstorage = (productData: Product) => {
     const storedData = localStorage.getItem("products");
     let products: Product[] = storedData ? JSON.parse(storedData) : [];
-
     products.push(productData);
     localStorage.setItem("products", JSON.stringify(products));
   };
@@ -150,7 +148,6 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                 />
               </div>
             </div>
-
             <div
               className="p-d-flex p-jc-center"
               style={{

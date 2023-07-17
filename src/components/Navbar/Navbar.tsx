@@ -1,6 +1,7 @@
 import React from "react";
 import { Menubar } from "primereact/menubar";
 import "./Navbar.css";
+import { Button } from "primereact/button";
 
 interface NavbarProps {
   username: string;
@@ -8,20 +9,32 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ username, onLogout }) => {
-  const items = [
-    {
-      label: username,
-      icon: "pi pi-user",
-      className: "p-mr-auto",
-    },
-    {
-      label: "Logout",
-      icon: "pi pi-sign-out",
-      command: onLogout,
-    },
-  ];
+  const start = (
+    <div className="user-info">
+      <i className="pi pi-user" style={{ marginRight: "0.5rem" }} />
+      {username}
+    </div>
+  );
 
-  return <Menubar model={items} className="navbar-wrapper" />;
+  const end = (
+    <>
+      <Button
+        label="Logout"
+        onClick={onLogout}
+        severity="secondary"
+        size="small"
+        icon="pi pi-sign-out"
+        style={{
+          border: "none",
+          WebkitBoxShadow: "none",
+        }}
+        className="custom-button"
+        outlined
+      />
+    </>
+  );
+
+  return <Menubar start={start} end={end} className="navbar-wrapper" />;
 };
 
 export default Navbar;

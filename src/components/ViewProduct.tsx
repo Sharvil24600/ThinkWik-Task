@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Navbar from "./Navbar/Navbar";
 import { logout } from "../redux/authSlice";
 import { loaderTimer } from "../config/config";
@@ -12,7 +12,6 @@ import { Button } from "primereact/button";
 
 const ViewProduct: React.FC = () => {
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
   const { productId } = useParams<{ productId: string }>();
   const products = useSelector((state: RootState) => state.product.products);
@@ -39,7 +38,7 @@ const ViewProduct: React.FC = () => {
     navigate("/home");
   };
   if (!product) {
-    return <div>Product not found</div>;
+    return <Navigate to="*"  replace/>;
   }
 
   return (
@@ -50,7 +49,7 @@ const ViewProduct: React.FC = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "100vh",
+          height: "520px",
         }}
       >
         <Card

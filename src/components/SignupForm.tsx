@@ -6,7 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Toast } from "primereact/toast";
 import Loader from "./Loader/Loader";
-import { loaderTimer } from "../config/config";
+import { loaderTimer, toastTimer } from "../config/config";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Card } from "primereact/card";
@@ -33,7 +33,7 @@ const validationSchema = Yup.object({
 const SignupForm: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const toast = useRef<Toast>(null);
 
   const handleSignup = (values: SignupFormValues) => {
@@ -52,19 +52,21 @@ const SignupForm: React.FC = () => {
           severity: "warn",
           summary: "Account Already Exists",
           detail: "An account with this email address already exists!",
+          life: toastTimer,
         });
         return;
       }
     }
     // Show the loader spinner
-    setIsLoading(true);
+    setLoading(true);
     // Simulate an API call with a delay of 5 seconds (loaderTimer - from config file)
     setTimeout(() => {
       // Store the user data
       localStorage.setItem("user", JSON.stringify(newUser));
       dispatch(addUser(newUser));
       // Redirect to the login page after signup
-      navigate("/", { state: { signupSuccess: true } });
+      localStorage.setItem("signupSuccess", "true"); // Store signup success state in localStorage
+      navigate("/");
     }, loaderTimer);
   };
 
@@ -161,7 +163,6 @@ const SignupForm: React.FC = () => {
                     />
                   </div>
                 </div>
-
                 <Button
                   type="submit"
                   label="Sign up"
@@ -181,7 +182,7 @@ const SignupForm: React.FC = () => {
             </span>
           </div>
         </Card>
-        {isLoading && <Loader />}
+        {loading && <Loader />}
       </div>
     </>
   );
