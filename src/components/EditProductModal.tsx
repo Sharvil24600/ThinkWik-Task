@@ -89,6 +89,9 @@ return (
       onHide={closeEditModal}
       style={{ width: "40vw", textAlign: "center" }}
       className="p-dialog-sm"
+      closeOnEscape={false}
+      closable={!loading} 
+      draggable={false}
     >
       <div>
         <Formik

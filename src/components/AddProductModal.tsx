@@ -73,6 +73,9 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
       style={{ width: "40vw", textAlign: "center" }}
       onHide={closeModal}
       className="p-dialog-sm"
+      closeOnEscape={false}
+      closable={!loading} 
+      draggable={false}
     >
       <div>
         <Formik
