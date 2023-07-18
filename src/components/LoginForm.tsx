@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../redux/authSlice";
 import { useDispatch } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { loaderTimer } from "../config/config";
+import { loaderTimer, toastTimer } from "../config/config";
 import Loader from "./Loader/Loader";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import { Card } from "primereact/card";
+import { Toast } from "primereact/toast";
 
 interface LoginFormValues {
   email: string;
@@ -23,12 +24,39 @@ const LoginForm: React.FC = () => {
     email: "",
     password: "",
   };
-  const [loginError, setLoginError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loginError, setLoginError] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const toast = useRef<Toast>(null);
+
+  useEffect(() => {
+    const signupSuccess = localStorage.getItem("signupSuccess");
+    if (signupSuccess) {
+      // Display the signup success toast
+      toast.current?.show({
+        severity: "success",
+        summary: "Signup Successful",
+        detail: "Your account has been created successfully!",
+        life: toastTimer,
+      });
+      // Clear the signup success state from localStorage after showing the toast
+      localStorage.removeItem("signupSuccess");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem("logoutToastShown")) {
+      toast.current?.show({
+        severity: "info",
+        summary: "Logged Out",
+        detail: "You have been successfully logged out!",
+        life: toastTimer,
+      });
+      localStorage.removeItem("logoutToastShown");
+    }
+  }, []);
 
   const handleLogin = (values: LoginFormValues) => {
     const userDataString = localStorage.getItem("user");
-
     if (userDataString !== null) {
       const userData = JSON.parse(userDataString);
       if (
@@ -36,14 +64,13 @@ const LoginForm: React.FC = () => {
         userData.password === values.password
       ) {
         // Show the loader spinner
-        setIsLoading(true);
+        setLoading(true);
         setTimeout(() => {
           // Store the user data
           localStorage.setItem("loginToastShown", "true");
           dispatch(
             loginUser({ email: values.email, password: values.password })
           );
-
           navigate("/home");
         }, loaderTimer);
       } else {
@@ -56,21 +83,20 @@ const LoginForm: React.FC = () => {
 
   const validateForm = (values: LoginFormValues) => {
     const errors: Partial<LoginFormValues> = {};
-
     if (!values.email) {
       errors.email = "Email is required";
     } else if (!/^\S+@\S+\.\S+$/.test(values.email)) {
       errors.email = "Invalid email address";
     }
-
     if (!values.password) {
       errors.password = "Password is required";
     }
-
     return errors;
   };
+
   return (
     <>
+      <Toast ref={toast} />
       <div
         style={{
           display: "flex",
@@ -154,7 +180,7 @@ const LoginForm: React.FC = () => {
             </span>
           </div>
         </Card>
-        {isLoading && <Loader />}
+        {loading && <Loader />}
       </div>
     </>
   );

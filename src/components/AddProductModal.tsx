@@ -40,11 +40,9 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
   const products = useSelector((state: RootState) => state.product.products); // Access the products from Redux store
   const [loading, setLoading] = useState<boolean>(false); // Add loading state
 
-
   const saveDataToLocalstorage = (productData: Product) => {
     const storedData = localStorage.getItem("products");
     let products: Product[] = storedData ? JSON.parse(storedData) : [];
-
     products.push(productData);
     localStorage.setItem("products", JSON.stringify(products));
   };
@@ -75,6 +73,9 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
       style={{ width: "40vw", textAlign: "center" }}
       onHide={closeModal}
       className="p-dialog-sm"
+      closeOnEscape={false}
+      closable={!loading} 
+      draggable={false}
     >
       <div>
         <Formik
@@ -150,7 +151,6 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                 />
               </div>
             </div>
-
             <div
               className="p-d-flex p-jc-center"
               style={{
